@@ -65,7 +65,6 @@ isJump = True
 gameLoop = True
 clock = pygame.time.Clock()
 
-
 if __name__ == "__main__":
     while gameLoop:
         clock.tick(60)
