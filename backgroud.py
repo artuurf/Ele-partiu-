@@ -11,7 +11,7 @@ class PlanoFundo(pygame.sprite.Sprite):
 
         self.rect.x = 860
 
-        self.speed = 4
+        self.speed = 2
 
     def update(self, *args):
         # logica

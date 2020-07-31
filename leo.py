@@ -8,15 +8,12 @@ class Leo(pygame.sprite.Sprite):
         self.image = pygame.image.load("data/image/leo.png")
         self.image = pygame.transform.scale(self.image, [100, 100])
         self.rect = pygame.Rect(50, 50, 100, 100)
-        self.jump = False
         self.speed = 0
         self.acceleration = 0.1
-        self.timer = 0
 
-    def update(self, *args):
-        # Logica
-        jump = pygame.mixer.Sound("data/audio/jump.wav")
 
+
+"""
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -35,6 +32,7 @@ class Leo(pygame.sprite.Sprite):
         elif self.rect.right > 550:
             self.rect.right = 550
             self.speed = 0
+
 
         elif keys[pygame.K_SPACE]:
             self.timer -= 0.05
@@ -55,7 +53,8 @@ class Leo(pygame.sprite.Sprite):
 
 
 
-"""
+
+
         elif keys[pygame.KEYUP]:
             self.rect.y -= 10
             print('Solta botao')
@@ -68,7 +67,6 @@ class Leo(pygame.sprite.Sprite):
             print('space')
 
 """
-
 
 """
         if keys[pygame.K_SPACE]:

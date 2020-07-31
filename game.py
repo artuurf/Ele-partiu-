@@ -36,7 +36,7 @@ pygame.display.set_caption("Ele partiu!")
 # Objects
 objectGroup = pygame.sprite.Group()
 
-# Background
+# Fundo
 backgroud = PlanoFundo(objectGroup)
 newbackgroud = PlanoFundo(objectGroup)
 newbackgroud.rect.center = [430, 290]
@@ -47,20 +47,23 @@ plataforma = Plataforma(objectGroup)
 newplataforma = Plataforma(objectGroup)
 newplataforma.rect.center = [430, 520]
 
+# Personagens
+
 leo = Leo(objectGroup)
-leo.rect.center = [300, 380]
+leo.rect.bottom = plataforma.rect.top
 
 renan = Renan(objectGroup)
 
 # Music
 # pygame.mixer_music.load("data/score.mp3")
 # pygame.mixer_music.play(-1)
+jump = pygame.mixer.Sound("data/audio/jump.wav")
 
-
+speed = 4
+jumpCount = 9
+isJump = True
 gameLoop = True
 clock = pygame.time.Clock()
-isPressingW = False
-key = pygame.key.get_pressed()
 
 
 if __name__ == "__main__":
@@ -69,23 +72,27 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
+        keys = pygame.key.get_pressed()
 
+        if keys[pygame.K_LEFT] or keys[pygame.K_a] and leo.rect.x > speed:
+            leo.rect.x -= speed
 
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d] and leo.rect.x < 500 - speed - 100:
+            leo.rect.x += speed
 
+        if not isJump:
 
-
-            """elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    leo.rect.y -= 40
-                    if leo.rect.bottom >= 420:
-                        leo.rect.bottom = plataforma.rect.top
-                        print('chega irmão')
-
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
-                    # leo.rect.bottom = plataforma.rect.top
-                    print('Soltou')"""
-
+            if keys[pygame.K_SPACE]:
+                jump.play()
+                isJump = True
+        else:
+            if jumpCount >= -9:
+                leo.rect.y -= (jumpCount * abs(jumpCount)) * 0.5
+                jumpCount -= 1
+            else:
+                jumpCount = 9
+                isJump = False
+                leo.rect.bottom = plataforma.rect.top
 
         # Update Logic:
         objectGroup.update()
