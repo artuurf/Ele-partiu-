@@ -1,15 +1,27 @@
 import pygame
-import math
 
 
 class Leo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pygame.image.load("data/image/leo.png")
-        self.image = pygame.transform.scale(self.image, [100, 100])
+        self.time = 0
+        self.images = [pygame.image.load("data/image/leo.png"),
+                       pygame.image.load("data/image/leo2.png"),
+                       pygame.image.load("data/image/leo3.png")
+                       ]
+        self.current_image = 0
+        # self.image = pygame.transform.scale(self.images[-1], [100, 100])
+        self.image = pygame.image.load("data/image/leo3.png")
         self.rect = pygame.Rect(50, 50, 100, 100)
-        self.speed = 0
-        self.acceleration = 0.1
+        self.timeScore = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self, *args):
+        self.timeScore += 0.01
+        self.time = int(self.timeScore)
+        if self.time == self.timeScore + 1:
+            self.current_image = (self.current_image + 1) % 3
+            self.image = self.images[self.current_image]
 
 
 

@@ -58,7 +58,7 @@ renan = Renan(objectGroup)
 # pygame.mixer_music.load("data/score.mp3")
 # pygame.mixer_music.play(-1)
 jump = pygame.mixer.Sound("data/audio/jump.wav")
-
+timeScore = 0
 speed = 4
 jumpCount = 9
 isJump = True
@@ -68,6 +68,7 @@ clock = pygame.time.Clock()
 if __name__ == "__main__":
     while gameLoop:
         clock.tick(60)
+        print(leo.time)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
