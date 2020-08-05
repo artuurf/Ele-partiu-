@@ -5,13 +5,13 @@ import math
 class PlanoFundo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pygame.image.load("data/image/imagefundo.png")
+        self.image = pygame.image.load("data/image/e9896186f55021eeb4a5f39fea811124.png")
         self.image = pygame.transform.scale(self.image, [860, 580])
         self.rect = pygame.Rect(0, 0, 860, 580)
 
         self.rect.x = 860
 
-        self.speed = 2
+        self.speed = 1
 
     def update(self, *args):
         # logica

@@ -1,28 +1,75 @@
 import pygame
 
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 800
+SPEED = 10
+GRAVITY = 1
+GAME_SPEED = 10
+
+GROUND_WIDTH = SCREEN_WIDTH
+GROUND_HEIGHT = 100
+
+PIPE_WIDTH = 80
+PIPE_HEIGHT = 500
+
+PIPE_GAP = 200
+
 
 class Leo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.time = 0
-        self.images = [pygame.image.load("data/image/leo.png"),
-                       pygame.image.load("data/image/leo2.png"),
-                       pygame.image.load("data/image/leo3.png")
+
+        # Definindo Sprites do Leo
+        self.sprite1 = pygame.image.load("data/image/leo.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/image/leo3.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/image/leo2.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/image/leo3.png").convert_alpha()
+        self.sprite5 = pygame.image.load("data/image/leo_mel.png").convert_alpha()
+        # Aumentando tamanho dos Sprites
+        self.sprite1 = pygame.transform.scale(self.sprite1, [60, 60])
+        self.sprite2 = pygame.transform.scale(self.sprite2, [60, 60])
+        self.sprite3 = pygame.transform.scale(self.sprite3, [60, 60])
+        self.sprite4 = pygame.transform.scale(self.sprite4, [60, 60])
+        self.sprite5 = pygame.transform.scale(self.sprite5, [60, 60])
+        # Ajustando Sprites no personagem
+        self.images = [self.sprite1,
+                       self.sprite2,
+                       self.sprite3,
+                       self.sprite4,
+                       self.sprite5
                        ]
+        # Declaração da variável que definirá o Sprite
         self.current_image = 0
-        # self.image = pygame.transform.scale(self.images[-1], [100, 100])
+        # Sprite fixo
         self.image = pygame.image.load("data/image/leo3.png")
-        self.rect = pygame.Rect(50, 50, 100, 100)
+        self.speed = 0
+        self.acceleration = 0.1
+        self.rect = pygame.Rect(50, 50, 60, 60)
         self.timeScore = 0
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, *args):
-        self.timeScore += 0.01
-        self.time = int(self.timeScore)
-        if self.time == self.timeScore + 1:
-            self.current_image = (self.current_image + 1) % 3
-            self.image = self.images[self.current_image]
+        self.current_image = (self.current_image + 1) % 4
+        self.image = self.images[self.current_image]
 
+        if self.rect.left < 80:
+            self.rect.left = 80
+            self.speed = 0
+        elif self.rect.right > 500:
+            self.rect.right = 500
+            self.speed = 0
+
+        # frameAtual = pygame.time.get_ticks()
+        # print(frameAtual)
+        # self.frameDeTroca = 0
+        # if frameAtual > self.frameDeTroca:
+        #     self.frameDeTroca += 1000
+        #     self.current_image = (self.current_image + 1) % 3
+        #     self.image = self.images[self.current_image]
+        #     print(clock())
+        # else:
+        #     print('Frame')
+        # Alternando automaticamente cada Sprite do Leo
 
 
 """
