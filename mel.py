@@ -51,9 +51,7 @@ class Mel(pygame.sprite.Sprite):
         self.count = 9
 
     def update(self, *args):
-        if not self.arremessar:
-            print('teste')
-        else:
+        if self.arremessar:
             self.rect.x -= self.speed
             self.rect.y -= (self.count * abs(self.count)) * 0.5
             self.count -= 1
@@ -67,7 +65,6 @@ class Mel(pygame.sprite.Sprite):
             self.current_image = (self.current_image + 1) % 8
             self.image = self.images[self.current_image]
             if self.rect.right < 0:
-                print('matou')
                 self.kill()
             elif self.rect.y > 400:
                 self.rect.y = 400

@@ -6,6 +6,7 @@ from backgroud import PlanoFundo
 from plataforma import Plataforma
 from mel import Mel
 import random
+import pygame.freetype
 
 # Inicializando o pygame e criando a Janela
 pygame.init()
@@ -17,6 +18,7 @@ timer = 0
 display = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Ele partiu!")
 
+
 # Objects
 objectGroup = pygame.sprite.Group()
 DelayGroup = pygame.sprite.Group()
@@ -26,7 +28,6 @@ melGroup = pygame.sprite.Group()
 backgroud = PlanoFundo(objectGroup)
 newbackgroud = PlanoFundo(objectGroup)
 newbackgroud.rect.center = [430, 290]
-
 
 # Plataforma
 plataforma = Plataforma(objectGroup)
@@ -52,6 +53,9 @@ isJump = True
 gameLoop = True
 clock = pygame.time.Clock()
 frameDeTroca = 0
+
+GAME_FONT = pygame.freetype.Font("Facile Sans.otf", 20)
+
 
 if __name__ == "__main__":
     while gameLoop:
@@ -107,7 +111,11 @@ if __name__ == "__main__":
 
         if frameAtual > frameDeTroca:
             frameDeTroca += 150
+            timeScore += 0.17
             DelayGroup.update()
+
+        GAME_FONT.render_to(display, (700, 30), f"Score: {int(timeScore)}M", (0, 0, 0))
+        pygame.display.flip()
 
         objectGroup.update()
 
@@ -117,4 +125,5 @@ if __name__ == "__main__":
         DelayGroup.draw(display)
         pygame.display.update()
 
+    pygame.quit()
 
