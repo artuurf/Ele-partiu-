@@ -2,7 +2,6 @@
 self.speed = 5
 """
 
-
 import pygame
 import math
 
@@ -43,3 +42,4 @@ class Renan(pygame.sprite.Sprite):
         self.rect.x = 650 + math.sin(self.timer) * 100
         self.current_image = (self.current_image + 1) % 4
         self.image = self.images[self.current_image]
+

@@ -1,4 +1,3 @@
-
 import pygame
 from leo import Leo
 from renan import Renan
@@ -7,6 +6,7 @@ from plataforma import Plataforma
 from mel import Mel
 import random
 import pygame.freetype
+from texto_game import Text
 
 # Inicializando o pygame e criando a Janela
 pygame.init()
@@ -17,7 +17,6 @@ timer = 0
 
 display = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Ele partiu!")
-
 
 # Objects
 objectGroup = pygame.sprite.Group()
@@ -41,21 +40,26 @@ leo.rect.bottom = plataforma.rect.top
 renan = Renan(DelayGroup)
 renan.rect.bottom = plataforma.rect.top
 
+# texto
+
+text = Text(DelayGroup)
+text.rect.center = [700, 50]
+
 
 # Music
-# pygame.mixer_music.load("data/score.mp3")
-# pygame.mixer_music.play(-1)
+pygame.mixer_music.load("data/audio/battleThemeA.mp3")
+pygame.mixer_music.play(-1)
 jump = pygame.mixer.Sound("data/audio/jump.wav")
-timeScore = 0
+hit = pygame.mixer.Sound("data/audio/weird_16.ogg")
 speed = 7
 jumpCount = 10
-isJump = True
+
 gameLoop = True
 clock = pygame.time.Clock()
 frameDeTroca = 0
 
-GAME_FONT = pygame.freetype.Font("Facile Sans.otf", 20)
 
+# GAME_FONT = pygame.freetype.Font("Facile Sans.otf", 20)
 
 if __name__ == "__main__":
     while gameLoop:
@@ -79,18 +83,19 @@ if __name__ == "__main__":
 
         leo.rect.x += leo.speed
 
-        if not isJump:
+        if not leo.isJump:
 
             if keys[pygame.K_SPACE]:
                 jump.play()
-                isJump = True
+                leo.isJump = True
         else:
             if jumpCount >= -9:
                 leo.rect.y -= (jumpCount * abs(jumpCount)) * 0.1
                 jumpCount -= 0.3
+
             else:
                 jumpCount = 9
-                isJump = False
+                leo.isJump = False
                 leo.rect.bottom = plataforma.rect.top
 
         # Update Logic:
@@ -102,20 +107,19 @@ if __name__ == "__main__":
             if random.random() < 0.7:
                 mel = Mel(DelayGroup, melGroup)
                 mel.rect.center = renan.rect.center
+                hit.play()
 
         colisao = pygame.sprite.spritecollide(leo, melGroup, False)
 
         if colisao:
             tomou = pygame.sprite.groupcollide(melGroup, objectGroup, True, False)
             leo.image = leo.images[4]
+            text.timeScore = 0
 
         if frameAtual > frameDeTroca:
             frameDeTroca += 150
-            timeScore += 0.17
+            text.timeScore += 0.17
             DelayGroup.update()
-
-        GAME_FONT.render_to(display, (700, 30), f"Score: {int(timeScore)}M", (0, 0, 0))
-        pygame.display.flip()
 
         objectGroup.update()
 
@@ -126,4 +130,3 @@ if __name__ == "__main__":
         pygame.display.update()
 
     pygame.quit()
-

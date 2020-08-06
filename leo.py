@@ -47,10 +47,14 @@ class Leo(pygame.sprite.Sprite):
         self.rect = pygame.Rect(50, 50, 60, 60)
         self.timeScore = 0
         self.mask = pygame.mask.from_surface(self.image)
+        self.isJump = True
 
     def update(self, *args):
-        self.current_image = (self.current_image + 1) % 4
-        self.image = self.images[self.current_image]
+        if self.isJump:
+            self.image = self.images[0]
+        else:
+            self.current_image = (self.current_image + 1) % 4
+            self.image = self.images[self.current_image]
 
         if self.rect.left < 80:
             self.rect.left = 80
