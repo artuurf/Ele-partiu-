@@ -45,7 +45,6 @@ class Mel(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, [30, 40])
         self.rect = pygame.Rect(700, 360, 30, 40)
         self.mask = pygame.mask.from_surface(self.image)
-        self.timer = 0
         self.arremessar = True
         self.speed = 30
         self.count = 9
