@@ -16,60 +16,25 @@ pygame.init()
 
 largura = 860
 altura = 580
-timer = 0
 gameover = False
 
 display = pygame.display.set_mode((largura, altura))
-pygame.display.set_caption("Ele partiu!")
-
-# Objects
-objectGroup = pygame.sprite.Group()
-DelayGroup = pygame.sprite.Group()
-melGroup = pygame.sprite.Group()
-bugerGroup = pygame.sprite.Group()
-
-# Fundo
-backgroud = PlanoFundo(objectGroup)
-newbackgroud = PlanoFundo(objectGroup)
-newbackgroud.rect.center = [430, 290]
-
-# Plataforma
-plataforma = Plataforma(objectGroup)
-newplataforma = Plataforma(objectGroup)
-newplataforma.rect.center = [430, 520]
-
-# buzina
-buz = Buzina(objectGroup)
-buz.rect.bottom = plataforma.rect.top
-
-
-# Personagens
-leo = Leo(DelayGroup)
-leo.rect.bottom = plataforma.rect.top
-
-renan = Renan(DelayGroup)
-renan.rect.bottom = plataforma.rect.top
-
-# texto
-
-text = Text(DelayGroup)
-text.rect.center = [700, 50]
-
-text1 = Text(DelayGroup)
-text1.rect.center = [50, 50]
-text1.ative = False
+pygame.display.set_caption("Leo Adventure")
 
 # Music
 # pygame.mixer_music.load("data/audio/battleThemeA.mp3")
 # pygame.mixer_music.play(-1)
 jump = pygame.mixer.Sound("data/audio/jump.wav")
 hit = pygame.mixer.Sound("data/audio/weird_16.ogg")
+end = pygame.mixer.Sound("data/audio/GameOver.wav")
 speed = 7
 jumpCount = 10
 
 gameLoop = True
 clock = pygame.time.Clock()
 frameDeTroca = 0
+
+timer = 0
 
 font = pygame.font.SysFont(None, 30)
 keys = pygame.key.get_pressed()
@@ -91,21 +56,52 @@ if __name__ == "__main__":
         global menu, click, keys
         while menu:
             clock.tick(60)
-            display.fill([0, 0, 0])
-            draw_text('Era uma vez, um estagiário que conheceu um rapaz;', font, (255, 255, 255), display, 40, 40)
-            draw_text('Ele não conhecia a fruta, mas mesmo assim experimentou;', font, (255, 255, 255), display, 40, 80)
-            draw_text('Certo dia o rapaz teve que ir embora;', font, (255, 255, 255), display, 40, 120)
-            draw_text('Então a bixa gladiadora foi atrás...', font, (255, 255, 255), display, 40, 160)
+            display.fill([170, 170, 170])
+            draw_text('Leo Adventure', font, (0, 0, 0), display, 50, 40)
 
             mx, my = pygame.mouse.get_pos()
 
-            button_1 = pygame.Rect(200, 400, 300, 50)
+            # Definindo imagens do botão
+            # __Botão 1__
+            img1_button_1 = pygame.image.load("data/image/btn_play.png").convert_alpha()
+            img2_button_1 = pygame.image.load("data/image/btn_play2.png").convert_alpha()
+            # __Botão 2__
+            img1_button_2 = pygame.image.load("data/image/btn_quit.png").convert_alpha()
+            img2_button_2 = pygame.image.load("data/image/btn_quit2.png").convert_alpha()
+            #imagem leo
+            leonardo = pygame.image.load("data/image/leo_reality.png").convert_alpha()
 
+            # Ajustando tamanho do botão
+            # __Botão 1__
+            img1_button_1 = pygame.transform.scale(img1_button_1, [200, 50])
+            img2_button_1 = pygame.transform.scale(img2_button_1, [200, 50])
+            # __Botão 2__
+            img1_button_2 = pygame.transform.scale(img1_button_2, [200, 50])
+            img2_button_2 = pygame.transform.scale(img2_button_2, [200, 50])
+
+            # Imagem leo
+            leonardo = pygame.transform.scale(leonardo, [420, 300])
+
+            # Botão invisivel para clique
+            button_1 = pygame.Rect(170, 400, 200, 50)
+            button_2 = pygame.Rect(470, 400, 200, 50)
+
+            # Efeito do botão Play
             if button_1.collidepoint(mx, my):
+                img1_button_1 = img2_button_1
                 if click:
-                    return game()
+                    return intro()
 
-            pygame.draw.rect(display, (255, 0, 0), button_1)
+            # Efeito do botão Quit
+            if button_2.collidepoint(mx, my):
+                img1_button_2 = img2_button_2
+                if click:
+                    return pygame.quit()
+
+            # Inserindo botões no menu
+            display.blit(img1_button_1, (170, 400))
+            display.blit(img1_button_2, (470, 400))
+            display.blit(leonardo, (250, 70))
 
             click = False
             for event in pygame.event.get():
@@ -115,20 +111,81 @@ if __name__ == "__main__":
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
                         click = True
-
             pygame.display.update()
         pygame.quit()
 
+    def intro():
+        pygame.mixer_music.load("data/audio/battleThemeA.mp3")
+        pygame.mixer_music.play(-1)
+        global gameover
+        while True:
+            clock.tick(20)
+            display.fill([0, 0, 0])
+            draw_text('Era uma vez, um estagiário que conheceu um rapaz...', font, (255, 255, 255), display, 40, 40)
+            draw_text('Ele não conhecia a fruta, mas mesmo assim experimentou...', font, (255, 255, 255), display, 40, 80)
+            draw_text('Certo dia o rapaz teve que ir embora...', font, (255, 255, 255), display, 40, 120)
+            draw_text('Então a bixa gladiadora foi atrás...', font, (255, 255, 255), display, 40, 160)
+
+            draw_text('PRESSIONE ESPAÇO', font, (255, 255, 255), display, 40, 400)
+
+            keys = pygame.key.get_pressed()
+
+            for event in pygame.event.get():
+                #print(event.type)
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                elif keys[K_KP_ENTER] or keys[K_ESCAPE] or keys[K_RETURN] or keys[K_SPACE]:
+                    return game()
+
+            pygame.display.update()
+
 
     def game():
+        # Objects
+        objectGroup = pygame.sprite.Group()
+        DelayGroup = pygame.sprite.Group()
+        melGroup = pygame.sprite.Group()
+        bugerGroup = pygame.sprite.Group()
+
+        # Fundo
+        backgroud = PlanoFundo(objectGroup)
+        newbackgroud = PlanoFundo(objectGroup)
+        newbackgroud.rect.center = [430, 290]
+
+        # Plataforma
+        plataforma = Plataforma(objectGroup)
+        newplataforma = Plataforma(objectGroup)
+        newplataforma.rect.center = [430, 520]
+
+        # buzina
+        buz = Buzina(objectGroup)
+        buz.rect.bottom = plataforma.rect.top
+
+        # Personagens
+        leo = Leo(DelayGroup)
+        leo.rect.bottom = plataforma.rect.top
+
+        renan = Renan(DelayGroup)
+        renan.rect.bottom = plataforma.rect.top
+
+        # texto
+
+        text = Text(DelayGroup)
+        text.rect.center = [700, 50]
+
+        text1 = Text(DelayGroup)
+        text1.rect.center = [50, 50]
+        text1.ative = False
         global gameLoop, speed, gameover, jumpCount, timer, frameDeTroca, keys
         while gameLoop:
             clock.tick(60)
-            # print(pygame.time.get_ticks())
+            text.timeScore += 0.02
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameLoop = False
 
+            keys = pygame.key.get_pressed()
             # Movimentação horizontal
             if keys[pygame.K_LEFT] or keys[pygame.K_a] and leo.rect.x > speed:
                 leo.speed -= leo.acceleration
@@ -146,7 +203,6 @@ if __name__ == "__main__":
                 if keys[pygame.K_SPACE] and not gameover:
                     jump.play()
                     leo.isJump = True
-                    print('space')
             else:
                 if jumpCount >= -9:
                     leo.rect.y -= (jumpCount * abs(jumpCount)) * 0.1
@@ -173,8 +229,8 @@ if __name__ == "__main__":
                 timer = 0
 
             if buz.rect.x == 320:
-                    buger = Buger(DelayGroup, bugerGroup)
-                    buger.rect.x = 350
+                buger = Buger(DelayGroup, bugerGroup)
+                buger.rect.x = 350
 
             colisao = pygame.sprite.spritecollide(leo, melGroup, False)
             life = pygame.sprite.spritecollide(leo, bugerGroup, False)
@@ -186,7 +242,9 @@ if __name__ == "__main__":
                 if text1.life < 0:
                     text.timeScore = 0
                     text1.life = 0
-                    gameover = True
+                    # gameover = True
+                    pygame.mixer_music.stop()
+                    end.play()
 
             elif life:
                 tomou = pygame.sprite.groupcollide(bugerGroup, objectGroup, True, False)
@@ -194,7 +252,6 @@ if __name__ == "__main__":
 
             if frameAtual > frameDeTroca:
                 frameDeTroca += 150
-                text.timeScore += 0.17
                 DelayGroup.update()
                 if int(text.timeScore) == 40:
                     buz.active = True
@@ -210,4 +267,4 @@ if __name__ == "__main__":
                 pygame.display.update()
 
         pygame.quit()
-    game()
+    main_menu()
