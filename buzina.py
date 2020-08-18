@@ -35,6 +35,6 @@ class Buzina(pygame.sprite.Sprite):
             if self.rect.x == 300:
                 self.image = self.images[2]
 
-            elif self.rect.right == 0:
-                self.kill()
+            elif self.rect.right < 0:
                 self.active = False
+                self.rect.x = 860

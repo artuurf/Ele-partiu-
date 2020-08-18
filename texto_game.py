@@ -11,7 +11,7 @@ class Text(pygame.sprite.Sprite):
         self.image = self.font.render(str(self.texto), 1, self.color)
         self.rect = self.image.get_rect()
         self.ative = True
-        self.life = 0
+        self.life = 1
         self.selector = 0
 
     def update(self, *args):

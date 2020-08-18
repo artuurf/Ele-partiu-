@@ -14,6 +14,7 @@ from carol import Carol
 from text_balao import Balao
 from disco import Disco
 from armario import Armario
+from rodrigo import Rodrigo
 
 # Inicializando o pygame e criando a Janela
 pygame.init()
@@ -33,6 +34,7 @@ pygame.display.set_caption("Leo Adventure")
 jump = pygame.mixer.Sound("data/audio/jump.wav")
 hit = pygame.mixer.Sound("data/audio/weird_16.ogg")
 end = pygame.mixer.Sound("data/audio/GameOver.wav")
+lifeBuzina = pygame.mixer.Sound("data/audio/score.wav")
 speed = 7
 jumpCount = 10
 
@@ -123,12 +125,14 @@ if __name__ == "__main__":
         global gameover, game
         introduction = True
         while introduction:
-            clock.tick(0)
+            clock.tick(60)
             display.fill([0, 0, 0])
-            draw_text('Era uma vez, um estagiário que conheceu um rapaz...', font, (255, 255, 255), display, 40, 40)
-            draw_text('Ele não conhecia a fruta, mas mesmo assim experimentou...', font, (255, 255, 255), display, 40, 80)
-            draw_text('Certo dia o rapaz teve que ir embora...', font, (255, 255, 255), display, 40, 120)
-            draw_text('Então a bixa gladiadora foi atrás...', font, (255, 255, 255), display, 40, 160)
+            draw_text('Ajude o Leo a alcançar o amor da sua vida!', font, (255, 255, 255), display, 40, 40)
+            draw_text('OBS:', font, (255, 255, 255), display, 40, 80)
+            draw_text('Desvie de todos os mel;', font, (255, 255, 255), display, 40, 120)
+            draw_text('Pegue o maximo de buzinas possiveis;', font, (255, 255, 255), display, 40, 160)
+            draw_text('Não deixe o Rodrigo pegar seus buzinas;', font, (255, 255, 255), display, 40, 200)
+            draw_text('Ao chegar aos 100M, não deixe o Boss te pegar;', font, (255, 255, 255), display, 40, 240)
 
             draw_text('PRESSIONE ESPAÇO', font, (255, 255, 255), display, 40, 400)
 
@@ -154,6 +158,7 @@ if __name__ == "__main__":
         melGroup = pygame.sprite.Group()
         bugerGroup = pygame.sprite.Group()
         carolGroup = pygame.sprite.Group()
+        rodrigoGroup = pygame.sprite.Group()
 
         # Fundo
         backgroud = PlanoFundo(objectGroup)
@@ -168,7 +173,7 @@ if __name__ == "__main__":
         # buzina
         buz = Buzina(objectGroup)
         buz.rect.bottom = plataforma.rect.top
-        buger = Buger(DelayGroup, bugerGroup)
+        buger = Buger(objectGroup, bugerGroup)
 
         # Personagens
         leo = Leo(DelayGroup)
@@ -191,12 +196,20 @@ if __name__ == "__main__":
 
         disco = Disco(DelayGroup)
 
+        # Balao Renan
         balao1 = Balao(objectGroup)
         balao1.image = balao1.images[1]
 
+        # balao Carol
         balao = Balao(objectGroup)
 
+        # Balao Rodrigo
+        balao2 = Balao(objectGroup)
+        balao2.image = balao2.images[2]
+
         armario = Armario(objectGroup)
+
+        rodrigo = Rodrigo(objectGroup, rodrigoGroup)
 
         global gameLoop, speed, gameover, jumpCount, timer, keys
         gameLoop = True
@@ -241,25 +254,26 @@ if __name__ == "__main__":
             frameAtual = pygame.time.get_ticks()
 
             timer += 1
-            if random.random() < 0.6 and text.timeScore < 100 and not gameover and timer > 110:
+            if random.random() < 0.6 and text.timeScore < 150 and not gameover and timer > 110:
                 mel = Mel(DelayGroup, melGroup)
                 mel.rect.center = renan.rect.center
                 renan.image = renan.images[4]
                 hit.play()
                 timer = 0
-            elif random.random() < 0.7 and text.timeScore >= 100 and not gameover and timer > 90:
+            elif random.random() < 0.7 and text.timeScore >= 150 and not gameover and timer > 90:
                 mel = Mel(DelayGroup, melGroup)
                 mel.rect.center = renan.rect.center
                 hit.play()
                 timer = 0
 
-            if buz.rect.x == 320:
+            if buz.rect.x == 380:
                 buger.arremessar = True
-                buger.rect.x = 350
+                buger.rect.x = 381
 
             colisao = pygame.sprite.spritecollide(leo, melGroup, False)
             life = pygame.sprite.spritecollide(leo, bugerGroup, False)
             carolpego = pygame.sprite.spritecollide(leo, carolGroup, False)
+            roubobuzina = pygame.sprite.spritecollide(leo, rodrigoGroup, False)
 
             if colisao:
                 tomou = pygame.sprite.groupcollide(melGroup, objectGroup, True, False)
@@ -275,6 +289,7 @@ if __name__ == "__main__":
             elif life:
                 tomou = pygame.sprite.groupcollide(bugerGroup, objectGroup, True, False)
                 text1.life += 1
+                lifeBuzina.play()
 
             elif carolpego:
                 tomou = pygame.sprite.groupcollide(carolGroup, objectGroup, False, False)
@@ -286,25 +301,42 @@ if __name__ == "__main__":
                     pygame.mixer_music.stop()
                     end.play()
 
+            elif roubobuzina and text1.life > 0:
+                rodrigo.image = rodrigo.images[1]
+                text1.life -= 1
+
             if frameAtual > frameDeTroca:
                 frameDeTroca += 150
                 DelayGroup.update()
-                if int(text.timeScore) == 30:
+                # Momento para personagens aparecerem
+                if int(text.timeScore) == 20:
                     buz.active = True
-                elif int(text.timeScore) == 80:
+                elif int(text.timeScore) == 65:
                     buz.active = True
-                elif int(text.timeScore) == 50:
+                elif int(text.timeScore) == 110:
+                    buz.active = True
+                elif int(text.timeScore) == 140:
+                    buz.active = True
+                elif int(text.timeScore) == 100:
                     carol.active = True
-                elif int(text.timeScore) == 54:
+                elif int(text.timeScore) == 103:
                     balao.rect.left = carol.rect.right + 10
                     balao.active = True
-
                 elif int(text.timeScore) == 15:
                     balao1.active = True
                     balao1.rect.right = renan.rect.left - 10
-
-                elif int(text.timeScore) == 40:
+                elif int(text.timeScore) == 48:
                     disco.active = True
+                elif int(text.timeScore) == 35:
+                    rodrigo.active = True
+                elif int(text.timeScore) == 36:
+                    balao2.active = True
+                    balao2.rect.right = rodrigo.rect.left
+                elif int(text.timeScore) == 80:
+                    rodrigo.active = True
+                elif int(text.timeScore) == 81:
+                    balao2.active = True
+                    balao2.rect.right = rodrigo.rect.left
 
             elif not gameover:
                 objectGroup.update()

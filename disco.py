@@ -35,5 +35,5 @@ class Disco(pygame.sprite.Sprite):
             self.rect.x -= 10
             self.current_image = (self.current_image + 1) % 2
             self.image = self.images[self.current_image]
-            if self.rect.x <= 0:
+            if self.rect.right < 0:
                 self.kill()
