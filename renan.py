@@ -1,6 +1,4 @@
-"""
-self.speed = 5
-"""
+
 
 import pygame
 import math
@@ -15,16 +13,19 @@ class Renan(pygame.sprite.Sprite):
         self.sprite2 = pygame.image.load("data/image/Renan1.png").convert_alpha()
         self.sprite3 = pygame.image.load("data/image/renan.png").convert_alpha()
         self.sprite4 = pygame.image.load("data/image/Renan2.png").convert_alpha()
+        self.sprite5 = pygame.image.load("data/image/Renan3.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [100, 100])
         self.sprite2 = pygame.transform.scale(self.sprite2, [100, 100])
         self.sprite3 = pygame.transform.scale(self.sprite3, [100, 100])
         self.sprite4 = pygame.transform.scale(self.sprite4, [100, 100])
+        self.sprite5 = pygame.transform.scale(self.sprite5, [100, 100])
 
         self.images = [self.sprite1,
                        self.sprite2,
                        self.sprite3,
-                       self.sprite4
+                       self.sprite4,
+                       self.sprite5
                        ]
 
         self.current_image = 0

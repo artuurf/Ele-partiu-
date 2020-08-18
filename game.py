@@ -10,6 +10,10 @@ from texto_game import Text
 from buzina import Buzina
 from buger import Buger
 from pygame.locals import *
+from carol import Carol
+from text_balao import Balao
+from disco import Disco
+from armario import Armario
 
 # Inicializando o pygame e criando a Janela
 pygame.init()
@@ -17,6 +21,8 @@ pygame.init()
 largura = 860
 altura = 580
 gameover = False
+game = False
+introduction = False
 
 display = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Leo Adventure")
@@ -30,11 +36,8 @@ end = pygame.mixer.Sound("data/audio/GameOver.wav")
 speed = 7
 jumpCount = 10
 
-gameLoop = True
+gameLoop = False
 clock = pygame.time.Clock()
-frameDeTroca = 0
-
-timer = 0
 
 font = pygame.font.SysFont(None, 30)
 keys = pygame.key.get_pressed()
@@ -117,9 +120,10 @@ if __name__ == "__main__":
     def intro():
         pygame.mixer_music.load("data/audio/battleThemeA.mp3")
         pygame.mixer_music.play(-1)
-        global gameover
-        while True:
-            clock.tick(20)
+        global gameover, game
+        introduction = True
+        while introduction:
+            clock.tick(0)
             display.fill([0, 0, 0])
             draw_text('Era uma vez, um estagiário que conheceu um rapaz...', font, (255, 255, 255), display, 40, 40)
             draw_text('Ele não conhecia a fruta, mas mesmo assim experimentou...', font, (255, 255, 255), display, 40, 80)
@@ -135,11 +139,13 @@ if __name__ == "__main__":
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                elif keys[K_KP_ENTER] or keys[K_ESCAPE] or keys[K_RETURN] or keys[K_SPACE]:
-                    return game()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        introduction = False
+                        return game()
 
             pygame.display.update()
-
+        pygame.quit()
 
     def game():
         # Objects
@@ -147,6 +153,7 @@ if __name__ == "__main__":
         DelayGroup = pygame.sprite.Group()
         melGroup = pygame.sprite.Group()
         bugerGroup = pygame.sprite.Group()
+        carolGroup = pygame.sprite.Group()
 
         # Fundo
         backgroud = PlanoFundo(objectGroup)
@@ -161,6 +168,7 @@ if __name__ == "__main__":
         # buzina
         buz = Buzina(objectGroup)
         buz.rect.bottom = plataforma.rect.top
+        buger = Buger(DelayGroup, bugerGroup)
 
         # Personagens
         leo = Leo(DelayGroup)
@@ -169,18 +177,34 @@ if __name__ == "__main__":
         renan = Renan(DelayGroup)
         renan.rect.bottom = plataforma.rect.top
 
+        carol = Carol(DelayGroup, carolGroup)
+        carol.rect.bottom = plataforma.rect.top
+
         # texto
 
-        text = Text(DelayGroup)
+        text = Text(objectGroup)
         text.rect.center = [700, 50]
 
-        text1 = Text(DelayGroup)
+        text1 = Text(objectGroup)
         text1.rect.center = [50, 50]
-        text1.ative = False
-        global gameLoop, speed, gameover, jumpCount, timer, frameDeTroca, keys
+        text1.selector = 2
+
+        disco = Disco(DelayGroup)
+
+        balao1 = Balao(objectGroup)
+        balao1.image = balao1.images[1]
+
+        balao = Balao(objectGroup)
+
+        armario = Armario(objectGroup)
+
+        global gameLoop, speed, gameover, jumpCount, timer, keys
+        gameLoop = True
+        frameDeTroca = 0
+        timer = 0
         while gameLoop:
             clock.tick(60)
-            text.timeScore += 0.02
+            text.timeScore += 0.01
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameLoop = False
@@ -217,23 +241,25 @@ if __name__ == "__main__":
             frameAtual = pygame.time.get_ticks()
 
             timer += 1
-            if random.random() < 0.6 and text.timeScore < 100 and not gameover and timer > 90:
+            if random.random() < 0.6 and text.timeScore < 100 and not gameover and timer > 110:
                 mel = Mel(DelayGroup, melGroup)
                 mel.rect.center = renan.rect.center
+                renan.image = renan.images[4]
                 hit.play()
                 timer = 0
-            elif random.random() < 0.8 and text.timeScore >= 100 and not gameover and timer > 70:
+            elif random.random() < 0.7 and text.timeScore >= 100 and not gameover and timer > 90:
                 mel = Mel(DelayGroup, melGroup)
                 mel.rect.center = renan.rect.center
                 hit.play()
                 timer = 0
 
             if buz.rect.x == 320:
-                buger = Buger(DelayGroup, bugerGroup)
+                buger.arremessar = True
                 buger.rect.x = 350
 
             colisao = pygame.sprite.spritecollide(leo, melGroup, False)
             life = pygame.sprite.spritecollide(leo, bugerGroup, False)
+            carolpego = pygame.sprite.spritecollide(leo, carolGroup, False)
 
             if colisao:
                 tomou = pygame.sprite.groupcollide(melGroup, objectGroup, True, False)
@@ -242,7 +268,7 @@ if __name__ == "__main__":
                 if text1.life < 0:
                     text.timeScore = 0
                     text1.life = 0
-                    # gameover = True
+                    gameover = True
                     pygame.mixer_music.stop()
                     end.play()
 
@@ -250,13 +276,35 @@ if __name__ == "__main__":
                 tomou = pygame.sprite.groupcollide(bugerGroup, objectGroup, True, False)
                 text1.life += 1
 
+            elif carolpego:
+                tomou = pygame.sprite.groupcollide(carolGroup, objectGroup, False, False)
+                text1.life -= 1
+                if text1.life < 0:
+                    text.timeScore = 0
+                    text1.life = 0
+                    gameover = True
+                    pygame.mixer_music.stop()
+                    end.play()
+
             if frameAtual > frameDeTroca:
                 frameDeTroca += 150
                 DelayGroup.update()
-                if int(text.timeScore) == 40:
+                if int(text.timeScore) == 30:
                     buz.active = True
-                elif int(text.timeScore) == 90:
+                elif int(text.timeScore) == 80:
                     buz.active = True
+                elif int(text.timeScore) == 50:
+                    carol.active = True
+                elif int(text.timeScore) == 54:
+                    balao.rect.left = carol.rect.right + 10
+                    balao.active = True
+
+                elif int(text.timeScore) == 15:
+                    balao1.active = True
+                    balao1.rect.right = renan.rect.left - 10
+
+                elif int(text.timeScore) == 40:
+                    disco.active = True
 
             elif not gameover:
                 objectGroup.update()
@@ -267,4 +315,5 @@ if __name__ == "__main__":
                 pygame.display.update()
 
         pygame.quit()
+
     main_menu()

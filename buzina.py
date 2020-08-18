@@ -33,8 +33,7 @@ class Buzina(pygame.sprite.Sprite):
             self.rect.x -= self.speed
 
             if self.rect.x == 300:
-                self.current_image = (self.current_image + 1) % 3
-                self.image = self.images[self.current_image]
+                self.image = self.images[2]
 
             elif self.rect.right == 0:
                 self.kill()

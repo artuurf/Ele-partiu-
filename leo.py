@@ -44,7 +44,7 @@ class Leo(pygame.sprite.Sprite):
         self.image = pygame.image.load("data/image/leo3.png")
         self.speed = 0
         self.acceleration = 0.1
-        self.rect = pygame.Rect(50, 50, 60, 60)
+        self.rect = pygame.Rect(100, 50, 60, 60)
         self.timeScore = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.isJump = True

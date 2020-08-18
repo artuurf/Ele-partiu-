@@ -12,12 +12,13 @@ class Text(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.ative = True
         self.life = 0
+        self.selector = 0
 
     def update(self, *args):
-        if self.ative:
+        if self.selector == 0:
             self.texto = f'Score: {int(self.timeScore)}M'
             self.image = self.font.render(str(self.texto), 1, self.color)
-        else:
+        elif self.selector == 2:
             self.texto = f'Leo: {int(self.life)}'
             self.image = self.font.render(str(self.texto), 1, self.color)
 

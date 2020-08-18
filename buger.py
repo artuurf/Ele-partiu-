@@ -7,9 +7,9 @@ class Buger(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = pygame.image.load("data/image/buger.png")
         self.image = pygame.transform.scale(self.image, [35, 35])
-        self.rect = pygame.Rect(300, 360, 35, 35)
+        self.rect = pygame.Rect(900, 360, 35, 35)
         self.mask = pygame.mask.from_surface(self.image)
-        self.arremessar = True
+        self.arremessar = False
         self.speed = 5
         self.count = 9
 
@@ -18,3 +18,5 @@ class Buger(pygame.sprite.Sprite):
             self.rect.x -= self.speed
             self.rect.y -= (self.count * abs(self.count)) * 0.5
             self.count -= 1
+            if self.rect.y >= 580:
+                self.kill()
