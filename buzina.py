@@ -1,5 +1,4 @@
 import pygame
-import math
 
 
 class Buzina(pygame.sprite.Sprite):
@@ -24,7 +23,7 @@ class Buzina(pygame.sprite.Sprite):
         self.rect = pygame.Rect(860, 350, 860, 120)
         self.mask = pygame.mask.from_surface(self.image)
         self.current_image = 0
-        self.speed = 3
+        self.speed = 2
         self.active = False
 
     def update(self, *args):
@@ -32,8 +31,12 @@ class Buzina(pygame.sprite.Sprite):
             # logica
             self.rect.x -= self.speed
 
-            if self.rect.x == 300:
+            if self.rect.x == 380:
                 self.image = self.images[2]
+            elif self.rect.x == 385 or self.rect.x == 360:
+                self.image = self.images[1]
+            elif self.rect.x == 350:
+                self.image = self.images[0]
 
             elif self.rect.right < 0:
                 self.active = False

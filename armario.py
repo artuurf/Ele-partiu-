@@ -1,7 +1,6 @@
 
 
 import pygame
-import math
 
 
 class Armario(pygame.sprite.Sprite):

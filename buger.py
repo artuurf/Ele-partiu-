@@ -20,3 +20,4 @@ class Buger(pygame.sprite.Sprite):
             self.count -= 0.2
             if self.rect.y > 580:
                 self.rect.y = 900
+                self.arremessar = False

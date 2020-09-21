@@ -46,6 +46,9 @@ class Carol(pygame.sprite.Sprite):
                 self.active1 = True
         elif self.active1:
             self.timer -= 0.1
-            self.rect.x = 50 + math.sin(self.timer) * 100
+            self.rect.x = 100 + math.sin(self.timer) * 120
+        elif not self.active:
+            self.rect = pygame.Rect(-100, 350, 70, 80)
+            self.active1 = False
 
 

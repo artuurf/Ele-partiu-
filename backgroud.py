@@ -1,35 +1,40 @@
 import pygame
-import math
 
 
 class PlanoFundo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pygame.image.load("data/image/e9896186f55021eeb4a5f39fea811124.png")
-        self.image = pygame.transform.scale(self.image, [860, 580])
-        self.rect = pygame.Rect(0, 0, 860, 580)
+        self.sprite1 = pygame.image.load("data/image/backg/cidade.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/image/backg/cidade1.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/image/backg/cidade2.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/image/backg/cidade3.png").convert_alpha()
 
-        self.rect.x = 860
+        self.sprite1 = pygame.transform.scale(self.sprite1, [1200, 580])
+        self.sprite2 = pygame.transform.scale(self.sprite2, [1200, 580])
+        self.sprite3 = pygame.transform.scale(self.sprite3, [1200, 580])
+        self.sprite4 = pygame.transform.scale(self.sprite4, [1200, 580])
 
-        self.speed = 1
+        self.images = [self.sprite1,
+                       self.sprite2,
+                       self.sprite3,
+                       self.sprite4
+                       ]
+
+        self.image = pygame.image.load("data/image/backg/cidade.png")
+        self.image = pygame.transform.scale(self.image, [1200, 580])
+        self.rect = pygame.Rect(0, 0, 1200, 580)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.active = False
+
+        self.rect.x = 1030
+
+        self.speed = 0
 
     def update(self, *args):
         # logica
         self.rect.x -= self.speed
 
-        if self.rect.right == 0:
-            self.rect.left = 860
+        if self.rect.right <= 0:
+            self.rect.left = 1200
 
 
-
-"""
-# Background
-
-        self.image = pygame.image.load("data/image/imagefundo.png")
-        self.image = pygame.transform.scale(self.image, [860, 580])
-        self.rect = self.image.get_rect()
-        
-                if self.rect.right == 0:
-            print('mata')
-            self.kill()
-"""

@@ -9,7 +9,7 @@ class Plataforma(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [450, 520]
 
-        self.speed = 4
+        self.speed = 3
         self.rect.x = 865
 
     def update(self, *args):

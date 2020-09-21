@@ -1,7 +1,6 @@
 
 
 import pygame
-import math
 
 
 class Balao(pygame.sprite.Sprite):
@@ -12,14 +11,18 @@ class Balao(pygame.sprite.Sprite):
         self.sprite1 = pygame.image.load("data/image/balaoviado.png").convert_alpha()
         self.sprite2 = pygame.image.load("data/image/balaorenan.png").convert_alpha()
         self.sprite3 = pygame.image.load("data/image/balaorodrigo.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/image/balaonasci.png").convert_alpha()
+
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [130, 90])
         self.sprite2 = pygame.transform.scale(self.sprite2, [130, 90])
         self.sprite3 = pygame.transform.scale(self.sprite3, [130, 90])
+        self.sprite4 = pygame.transform.scale(self.sprite4, [130, 90])
 
         self.images = [self.sprite1,
                        self.sprite2,
-                       self.sprite3
+                       self.sprite3,
+                       self.sprite4
                        ]
 
         self.rect = pygame.Rect(-150, 250, 130, 90)
@@ -33,4 +36,7 @@ class Balao(pygame.sprite.Sprite):
             if self.timer >= int(18):
                 self.kill()
                 self.active = False
+            elif self.image == self.images[3] or self.image == self.images[2]:
+                self.rect.x -= 2
+
 
