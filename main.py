@@ -37,12 +37,11 @@ display = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Leo Adventure")
 
 # Music
-# pygame.mixer_music.load("data/audio/battleThemeA.mp3")
-# pygame.mixer_music.play(-1)
-jump = pygame.mixer.Sound("data/audio/jump.wav")
-hit = pygame.mixer.Sound("data/audio/weird_16.wav")
-end = pygame.mixer.Sound("data/audio/GameOver.wav")
-lifeBuzina = pygame.mixer.Sound("data/audio/score.wav")
+
+jump = pygame.mixer.Sound("data/jump.wav")
+hit = pygame.mixer.Sound("data/weird_16.wav")
+end = pygame.mixer.Sound("data/GameOver.wav")
+lifeBuzina = pygame.mixer.Sound("data/score.wav")
 speed = 7
 jumpCount = 10
 
@@ -169,19 +168,19 @@ if __name__ == "__main__":
         while menu:
             clock.tick(60)
             display.fill([170, 170, 170])
-            draw_text('Leo Adventure', font, (0, 0, 0), display, 50, 40)
+            #draw_text('Leo Adventure', font, (0, 0, 0), display, 50, 40)
 
             mx, my = pygame.mouse.get_pos()
 
             # Definindo imagens do botão
             # __Botão 1__
-            img1_button_1 = pygame.image.load("data/image/btn_play.png").convert_alpha()
-            img2_button_1 = pygame.image.load("data/image/btn_play2.png").convert_alpha()
+            img1_button_1 = pygame.image.load("data/btn_play.png").convert_alpha()
+            img2_button_1 = pygame.image.load("data/btn_play2.png").convert_alpha()
             # __Botão 2__
-            img1_button_2 = pygame.image.load("data/image/btn_quit.png").convert_alpha()
-            img2_button_2 = pygame.image.load("data/image/btn_quit2.png").convert_alpha()
+            img1_button_2 = pygame.image.load("data/btn_quit.png").convert_alpha()
+            img2_button_2 = pygame.image.load("data/btn_quit2.png").convert_alpha()
             #imagem leo
-            leonardo = pygame.image.load("data/image/leo_reality.png").convert_alpha()
+            leonardo = pygame.image.load("data/leo_reality.png").convert_alpha()
 
             # Ajustando tamanho do botão
             # __Botão 1__
@@ -202,7 +201,7 @@ if __name__ == "__main__":
             if button_1.collidepoint(mx, my):
                 img1_button_1 = img2_button_1
                 if click:
-                    pygame.mixer_music.load("data/audio/battleThemeA.mp3")
+                    pygame.mixer_music.load("data/battleThemeA.mp3")
                     pygame.mixer_music.play(-1)
                     menu = False
 
@@ -230,6 +229,7 @@ if __name__ == "__main__":
         # -------------------------------------------- // --------------------------------------------
         # Definindo Introdução
         while introduction:
+            clock.tick(60)
             display.fill([0, 0, 0])
             draw_text('Ajude o Leo a alcançar o amor da sua vida!', font, (255, 255, 255), display, 40, 40)
             draw_text('REGRAS:', font, (255, 255, 255), display, 40, 80)
@@ -262,9 +262,9 @@ if __name__ == "__main__":
             carol.active = False
             clock.tick(60)
             display.fill([0, 0, 0])
-            nao_deu = pygame.image.load("data/image/nao_deu.png").convert_alpha()
+            nao_deu = pygame.image.load("data/nao_deu.png").convert_alpha()
             nao_deu = pygame.transform.scale(nao_deu, [300, 80])
-            leo_nao_deu = pygame.image.load("data/image/Leo_mel.png").convert_alpha()
+            leo_nao_deu = pygame.image.load("data/Leo_mel.png").convert_alpha()
             leo_nao_deu = pygame.transform.scale(leo_nao_deu, [90, 90])
 
             draw_text('PRESSIONE ESPAÇO PARA TENTAR NOVAMENTE', font, (255, 255, 255), display, 170, 450)
@@ -281,8 +281,10 @@ if __name__ == "__main__":
                         menu = True
                         gameover_end = False
                         gameover = False
-
-                        # pygame.mixer_music.load("data/audio/battleThemeA.mp3")
+                        carol.right = 0
+                        buz.right = 0
+                        rodrigo.right = 0
+                        # pygame.mixer_music.load("data/battleThemeA.mp3")
                         # pygame.mixer_music.play(-1)
 
             display.blit(nao_deu, (300, 100))
@@ -297,7 +299,7 @@ if __name__ == "__main__":
             carol.active = False
             clock.tick(60)
             display.fill([0, 0, 0])
-            agora_deu = pygame.image.load("data/image/fim.png").convert_alpha()
+            agora_deu = pygame.image.load("data/fim.png").convert_alpha()
             agora_deu = pygame.transform.scale(agora_deu, [800, 400])
 
 
@@ -348,10 +350,10 @@ if __name__ == "__main__":
         keys = pygame.key.get_pressed()
         # Movimentação horizontal
         if keys[pygame.K_LEFT] or keys[pygame.K_a] and leo.rect.x > speed:
-            leo.speed -= leo.acceleration
+            leo.speed -= 0.1
 
         if keys[pygame.K_RIGHT] or keys[pygame.K_d] and leo.rect.x < 500 - speed - 100:
-            leo.speed += leo.acceleration
+            leo.speed += 0.1
 
         else:
             leo.speed *= 0.98
@@ -435,7 +437,7 @@ if __name__ == "__main__":
                 buz.active = True
             elif int(text.timeScore) == 70:
                 buz.active = True
-            elif int(text.timeScore) == 110:
+            elif int(text.timeScore) == 120:
                 buz.active = True
             elif int(text.timeScore) == 100:
                 carol.active = True
@@ -459,13 +461,13 @@ if __name__ == "__main__":
             elif int(text.timeScore) == 51:
                 balao2.active = True
                 balao2.rect.right = rodrigo.rect.left
-            elif int(text.timeScore) == 120:
+            elif int(text.timeScore) == 60:
                 nasci.active = True
-            elif int(text.timeScore) == 122:
+            elif int(text.timeScore) == 62:
                 nasci.image = nasci.images[3]
                 balao3.active = True
                 balao3.rect.right = nasci.rect.left
-            elif int(text.timeScore) == 150:
+            elif int(text.timeScore) == 200:
                 game_end = True
 
         objectGroup.draw(display)

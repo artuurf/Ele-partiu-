@@ -9,11 +9,11 @@ class Renan(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
-        self.sprite1 = pygame.image.load("data/image/renan.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/Renan1.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/renan.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/Renan2.png").convert_alpha()
-        self.sprite5 = pygame.image.load("data/image/Renan3.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/renan.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/Renan1.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/renan.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/Renan2.png").convert_alpha()
+        self.sprite5 = pygame.image.load("data/renan3.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [100, 100])
         self.sprite2 = pygame.transform.scale(self.sprite2, [100, 100])
@@ -30,7 +30,7 @@ class Renan(pygame.sprite.Sprite):
 
         self.current_image = 0
 
-        self.image = pygame.image.load("data/image/renan.png")
+        self.image = pygame.image.load("data/renan.png")
         self.image = pygame.transform.scale(self.image, [110, 110])
         self.rect = pygame.Rect(860, 350, 100, 100)
         self.mask = pygame.mask.from_surface(self.image)

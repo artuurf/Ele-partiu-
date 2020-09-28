@@ -20,11 +20,11 @@ class Leo(pygame.sprite.Sprite):
         super().__init__(*groups)
 
         # Definindo Sprites do Leo
-        self.sprite1 = pygame.image.load("data/image/leo.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/leo3.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/leo2.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/leo3.png").convert_alpha()
-        self.sprite5 = pygame.image.load("data/image/leo_mel.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/Leo.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/Leo3.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/Leo2.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/Leo3.png").convert_alpha()
+        self.sprite5 = pygame.image.load("data/Leo_mel.png").convert_alpha()
         # Aumentando tamanho dos Sprites
         self.sprite1 = pygame.transform.scale(self.sprite1, [60, 60])
         self.sprite2 = pygame.transform.scale(self.sprite2, [60, 60])
@@ -41,7 +41,7 @@ class Leo(pygame.sprite.Sprite):
         # Declaração da variável que definirá o Sprite
         self.current_image = 0
         # Sprite fixo
-        self.image = pygame.image.load("data/image/leo3.png")
+        self.image = pygame.image.load("data/Leo3.png")
         self.speed = 0
         self.acceleration = 0.1
         self.rect = pygame.Rect(100, 50, 60, 60)

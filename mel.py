@@ -7,15 +7,15 @@ class Mel(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
-        self.sprite1 = pygame.image.load("data/image/mel.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/mel1.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/mel2.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/mel3.png").convert_alpha()
-        self.sprite5 = pygame.image.load("data/image/mel4.png").convert_alpha()
-        self.sprite6 = pygame.image.load("data/image/mel5.png").convert_alpha()
-        self.sprite7 = pygame.image.load("data/image/mel6.png").convert_alpha()
-        self.sprite8 = pygame.image.load("data/image/mel7.png").convert_alpha()
-        self.sprite9 = pygame.image.load("data/image/mel_caido.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/mel.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/mel1.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/mel2.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/mel3.png").convert_alpha()
+        self.sprite5 = pygame.image.load("data/mel4.png").convert_alpha()
+        self.sprite6 = pygame.image.load("data/mel5.png").convert_alpha()
+        self.sprite7 = pygame.image.load("data/mel6.png").convert_alpha()
+        self.sprite8 = pygame.image.load("data/mel7.png").convert_alpha()
+        self.sprite9 = pygame.image.load("data/mel_caido.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [30, 40])
         self.sprite2 = pygame.transform.scale(self.sprite2, [40, 50])
@@ -40,7 +40,7 @@ class Mel(pygame.sprite.Sprite):
 
         self.current_image = 0
 
-        self.image = pygame.image.load("data/image/mel.png")
+        self.image = pygame.image.load("data/mel.png")
         self.image = pygame.transform.scale(self.image, [30, 40])
         self.rect = pygame.Rect(700, 360, 30, 40)
         self.mask = pygame.mask.from_surface(self.image)

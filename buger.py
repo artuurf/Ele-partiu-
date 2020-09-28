@@ -5,7 +5,7 @@ class Buger(pygame.sprite.Sprite):
 
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pygame.image.load("data/image/buger.png")
+        self.image = pygame.image.load("data/buger.png")
         self.image = pygame.transform.scale(self.image, [45, 35])
         self.rect = pygame.Rect(900, 360, 45, 35)
         self.mask = pygame.mask.from_surface(self.image)

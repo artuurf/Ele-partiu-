@@ -4,10 +4,10 @@ import pygame
 class PlanoFundo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.sprite1 = pygame.image.load("data/image/backg/cidade.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/backg/cidade1.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/backg/cidade2.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/backg/cidade3.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/cidade.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/cidade1.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/cidade2.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/cidade3.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [1200, 580])
         self.sprite2 = pygame.transform.scale(self.sprite2, [1200, 580])
@@ -20,7 +20,7 @@ class PlanoFundo(pygame.sprite.Sprite):
                        self.sprite4
                        ]
 
-        self.image = pygame.image.load("data/image/backg/cidade.png")
+        self.image = pygame.image.load("data/cidade.png")
         self.image = pygame.transform.scale(self.image, [1200, 580])
         self.rect = pygame.Rect(0, 0, 1200, 580)
         self.mask = pygame.mask.from_surface(self.image)

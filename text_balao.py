@@ -8,10 +8,10 @@ class Balao(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
-        self.sprite1 = pygame.image.load("data/image/balaoviado.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/balaorenan.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/balaorodrigo.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/balaonasci.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/balaoviado.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/balaorenan.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/balaorodrigo.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/balaonasci.png").convert_alpha()
 
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [130, 90])

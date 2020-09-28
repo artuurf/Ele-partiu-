@@ -9,10 +9,10 @@ class Carol(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
-        self.sprite1 = pygame.image.load("data/image/carol.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/carol1.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/carol.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/carol2.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/carol.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/carol1.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/carol.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/carol2.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [70, 80])
         self.sprite2 = pygame.transform.scale(self.sprite2, [70, 80])
@@ -27,7 +27,7 @@ class Carol(pygame.sprite.Sprite):
 
         self.current_image = 0
 
-        self.image = pygame.image.load("data/image/carol.png")
+        self.image = pygame.image.load("data/carol.png")
         self.image = pygame.transform.scale(self.image, [70, 80])
         self.rect = pygame.Rect(-100, 350, 70, 80)
         self.mask = pygame.mask.from_surface(self.image)

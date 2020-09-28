@@ -8,10 +8,10 @@ class Rodrigo(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
-        self.sprite1 = pygame.image.load("data/image/rodrigo.png").convert_alpha()
-        self.sprite2 = pygame.image.load("data/image/rodrigo_buger.png").convert_alpha()
-        self.sprite3 = pygame.image.load("data/image/nasci.png").convert_alpha()
-        self.sprite4 = pygame.image.load("data/image/nasci1.png").convert_alpha()
+        self.sprite1 = pygame.image.load("data/rodrigo.png").convert_alpha()
+        self.sprite2 = pygame.image.load("data/rodrigo_buger.png").convert_alpha()
+        self.sprite3 = pygame.image.load("data/nasci.png").convert_alpha()
+        self.sprite4 = pygame.image.load("data/nasci1.png").convert_alpha()
 
         self.sprite1 = pygame.transform.scale(self.sprite1, [70, 80])
         self.sprite2 = pygame.transform.scale(self.sprite2, [90, 80])
@@ -26,7 +26,7 @@ class Rodrigo(pygame.sprite.Sprite):
 
         self.current_image = 0
 
-        self.image = pygame.image.load("data/image/rodrigo.png")
+        self.image = pygame.image.load("data/rodrigo.png")
         self.image = pygame.transform.scale(self.image, [70, 80])
         self.rect = pygame.Rect(860, 350, 70, 80)
         self.mask = pygame.mask.from_surface(self.image)
@@ -35,7 +35,7 @@ class Rodrigo(pygame.sprite.Sprite):
     def update(self, *args):
         if self.active:
             self.rect.x -= 2
-            if self.rect.right < 0 and self.image == self.images[1]:
+            if self.rect.right < 0:
                 self.active = False
                 self.rect.x = 860
                 self.image = self.images[0]
